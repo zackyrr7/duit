@@ -5,19 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class kategori extends Model
+class Bulan extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nama',
-        'icon',
-        'users_id',
-        'jenis'
+        'nama'
     ];
-
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }

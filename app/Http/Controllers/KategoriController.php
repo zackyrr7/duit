@@ -19,6 +19,20 @@ class KategoriController extends Controller
         return kategori::where('users_id', $id)->get();
     }
 
+    public function indexUserPemasukan($id)
+    {
+
+        $kategori =  kategori::where('users_id', $id)->where('jenis', 'pemasukan')->get();
+        return $kategori;
+    }
+    
+
+    public function indexUserPengeluaran($id)
+    {
+
+        return kategori::where('users_id', $id)->where('jenis', 'pengeluaran')->get();
+    }
+
     public function store(Request $request)
     {
         try {
@@ -26,6 +40,7 @@ class KategoriController extends Controller
             $kategori->users_id = $request->users_id;
             $kategori->nama = $request->nama;
             $kategori->icon = $request->icon;
+            $kategori->jenis = $request->jenis;
             $kategori->save();
 
             return response()->json([
@@ -52,6 +67,7 @@ class KategoriController extends Controller
             }
             $kategori->nama = $request->nama;
             $kategori->icon = $request->icon;
+            $kategori->jenis = $request->jenis;
             $kategori->users_id = $request->users_id;
             return response()->json([
                 'status' => '200',
