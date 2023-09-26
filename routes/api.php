@@ -6,6 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BulanController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PemasukanController;
+use App\Http\Controllers\PengeluaranController;
+use App\Http\Controllers\PengingatController;
 use App\Models\pemasukan;
 
 /*
@@ -53,6 +55,11 @@ Route::post('/pemasukan/update/{id}', [PemasukanController::class, 'update']);
 Route::post('/pemasukan/delete/{id}', [PemasukanController::class, 'destroy']);
 Route::post('/pemasukan', [PemasukanController::class, 'store']);
 
+Route::get('/pengeluaran/{id}', [PengeluaranController::class, 'indexUser']);
+Route::post('/pengeluaran/update/{id}', [PengeluaranController::class, 'update']);
+Route::post('/pengeluaran/delete/{id}', [PengeluaranController::class, 'destroy']);
+Route::post('/pengeluaran', [PengeluaranController::class, 'store']);
+
 
 //kategori
 Route::get('/kategori', [KategoriController::class, 'index']);
@@ -62,3 +69,10 @@ Route::get('/kategori/pengeluaran/{id}', [KategoriController::class, 'indexUserP
 Route::post('/kategori', [KategoriController::class, 'store']);
 Route::post('/kategori/update/{id}', [KategoriController::class, 'update']);
 Route::post('/kategori/delete/{id}', [KategoriController::class, 'destroy']);
+
+//Pengingat
+
+Route::get('/pengingat/{id}', [PengingatController::class, 'indexUser']);
+Route::post('/pengingat', [PengingatController::class, 'store']);
+Route::post('/pengingat/update/{id}', [PengingatController::class, 'update']);
+Route::post('/pengingat/delete/{id}', [PengingatController::class, 'destroy']);
