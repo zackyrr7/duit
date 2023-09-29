@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class pengeluaran extends Model
+class transaksi extends Model
 {
     use HasFactory;
-    protected $fillable = [
+    protected $fillabel = [
         'nama',
+        'status',
         'total',
         'tanggal',
         'users_id',

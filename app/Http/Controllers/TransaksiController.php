@@ -2,72 +2,83 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\pengeluaran;
+use App\Models\transaksi;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
-class PengeluaranController extends Controller
+class TransaksiController extends Controller
 {
     public function indexUser($id)
     {
-        return pengeluaran::where('users_id', $id)->get();
+        return transaksi::where('users_id', $id)->get();
+    }
+
+    public function indexUserPengeluaran($id)
+    {
+        return transaksi::where('users_id', $id)->where('status', 'pengeluaran')->get();
+    }
+
+    public function indexUserPemasukan($id)
+    {
+        return transaksi::where('users_id', $id)->where('status', 'pemasukan')->get();
     }
 
     public function store(Request $request)
     {
         try {
-            $pengeluaran = new pengeluaran();
-            $pengeluaran->users_id = $request->users_id;
-            $pengeluaran->kategoris_id = $request->kategoris_id;
-            $pengeluaran->nama = $request->nama;
-            $pengeluaran->total = $request->total;
-            $pengeluaran->tanggal = Carbon::now()->toDateTimeString();
+            $pemasukan = new transaksi();
+            $pemasukan->status = $request->status;
+            $pemasukan->users_id = $request->users_id;
+            $pemasukan->kategoris_id = $request->kategoris_id;
+            $pemasukan->nama = $request->nama;
+            $pemasukan->total = $request->total;
+            $pemasukan->tanggal = Carbon::now()->toDateTimeString();
             $bulan = Carbon::now()->format('m');
 
             switch ($bulan) {
                 case '01':
-                    $pengeluaran->bulans_id = '1';
+                    $pemasukan->bulans_id = '1';
                     break;
                 case '02':
-                    $pengeluaran->bulans_id = '2';
+                    $pemasukan->bulans_id = '2';
                     break;
                 case '03':
-                    $pengeluaran->bulans_id = '3';
+                    $pemasukan->bulans_id = '3';
                     break;
                 case '04':
-                    $pengeluaran->bulans_id = '4';
+                    $pemasukan->bulans_id = '4';
                     break;
                 case '05':
-                    $pengeluaran->bulans_id = '5';
+                    $pemasukan->bulans_id = '5';
                     break;
                 case '06':
-                    $pengeluaran->bulans_id = '6';
+                    $pemasukan->bulans_id = '6';
                     break;
                 case '07':
-                    $pengeluaran->bulans_id = '7';
+                    $pemasukan->bulans_id = '7';
                     break;
                 case '08':
-                    $pengeluaran->bulans_id = '8';
+                    $pemasukan->bulans_id = '8';
                     break;
                 case '09':
-                    $pengeluaran->bulans_id = '9';
+                    $pemasukan->bulans_id = '9';
                     break;
                 case '10':
-                    $pengeluaran->bulans_id = '10';
+                    $pemasukan->bulans_id = '10';
                     break;
                 case '11':
-                    $pengeluaran->bulans_id = '11';
+                    $pemasukan->bulans_id = '11';
                     break;
                 case '12':
-                    $pengeluaran->bulans_id = '12';
+                    $pemasukan->bulans_id = '12';
                     break;
                 default:
-                    $pengeluaran->bulans_id = '13';
+                    $pemasukan->bulans_id = '13';
             }
 
 
-            $pengeluaran->save();
+            $pemasukan->save();
 
             return response()->json([
                 'status' => "200",
@@ -76,7 +87,7 @@ class PengeluaranController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'status' => "500",
-                'tanggal' => $pengeluaran->tanggal,
+                'tanggal' => $pemasukan->tanggal,
                 'message' => "Something went really wrong",
 
             ]);
@@ -86,25 +97,26 @@ class PengeluaranController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $pengeluaran = pengeluaran::find($id);
-            if (!$pengeluaran) {
+            $pemasukan = transaksi::find($id);
+            if (!$pemasukan) {
                 return response()->json([
                     'status' => '404',
                     'message' => 'Transaksi tidak ditemukan'
                 ]);
             }
             
-            // $pengeluaran->users_id = $pengeluaran->users_id;
-            // $pengeluaran->kategoris_id = $request->kategoris_id;
-            $pengeluaran->nama = $request->nama;
-            $pengeluaran->total = $request->total;
-            $pengeluaran->tanggal = $pengeluaran->tanggal;
-            $pengeluaran->bulans_id = $pengeluaran->bulans_id;
-            $pengeluaran->save();
+            // $pemasukan->users_id = $pemasukan->users_id;
+            // $pemasukan->kategoris_id = $request->kategoris_id;
+            $pemasukan->nama = $request->nama;
+            $pemasukan->status = $request->status;
+            $pemasukan->total = $request->total;
+            $pemasukan->tanggal = $pemasukan->tanggal;
+            $pemasukan->bulans_id = $pemasukan->bulans_id;
+            $pemasukan->save();
             return response()->json([
                 'status' => '200',
                 'message' => 'Transaksi berhasil di update',
-                'data' => $pengeluaran
+                'data' => $pemasukan
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -117,14 +129,14 @@ class PengeluaranController extends Controller
     public function destroy($id)
     {
         try {
-            $pengeluaran = pengeluaran::find($id);
-            if (!$pengeluaran) {
+            $pemasukan = transaksi::find($id);
+            if (!$pemasukan) {
                 return response()->json([
                     'status' => '404',
                     'message' => 'Transaksi tidak ditemukan'
                 ]);
             }
-            $pengeluaran->delete();
+            $pemasukan->delete();
             return response()->json([
                 'status' => '200',
                 'message' => 'Transaksi berhasil di hapus'
